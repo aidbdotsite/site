@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ <head>
+     <meta charset="utf-8" />
+  <title>如何在Debian 10/11上安装WordPress（分步操作） | Mister Xu`s Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://peachfart.github.io/site//styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+ </head>
+ <body>
+     <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://peachfart.github.io/site//images/avatar.png?v=1658496793388" style="width:127px;" />
+
+     <h3 title=""><a href="/">Mr Xu</a></h3>
+
+     <div class="description">
+      <p>与其感慨路难行，不如马上出发！</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    <li><a href="https://www.facebook.com/aeiouspaces"><i class="fa fa-facebook"></i></a></li>
+ 
+    
+
+    <li><a href="https://github.com/aeiouspace"><i class="fa fa-github"></i></a></li>
+ 
+    
+
+    
+
+    <li><a href="https://www.youtube.com/channel/UCTthqQgWwWmTEFugNJ5I4gQ"><i class="fa fa-youtube"></i></a></li>
+ 
+    
+
+    
+
+    <li><a href="https://www.weibo.com/5845502445"><i class="fa fa-weibo"></i></a></li>
+ 
+    
+
+    <li><a href="tencent://message/?uin=347773623"><i class="fa fa-qq"></i></a></li>
+ 
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Power by <a href="#" target="_blank">Gridea</a>&nbsp;|&nbsp;Create by <a href="https://github.com/Peachfart" target="_blank">徐同学</a>
+    </div>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-203112676-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-203112676-1');
+</script>
+
+
+    </div>
+   </div>
+  </div>
+  <div class="main">
+     <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="/tags">标签</a></li>
+
+     <li><a  href="/about">关于</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+   <div class="autopagerize_page_element">
+    <div class="content">
+     <div class="post-page">
+      <div class="post animated fadeInDown">
+       <div class="post-title">
+        <h3><a>如何在Debian 10/11上安装WordPress（分步操作）</a></h3>
+       </div>
+       <div class="post-content">
+        <p>作者：<a href="https://cloudinfrastructureservices.co.uk/install-wordpress-on-debian-10-11/">Hitesh Jethva</a></p>
+<p>WordPress是一个免费、开源和互联网上最受欢迎的内容管理系统之一。它允许您在互联网上托管静态和动态内容。一般来说，它曾经是一个博客平台，但它多年来被用户改编，并变得非常通用。现在，它允许用户创建任何类别的功能齐全的网站。<a href="https://wordpress.com/">WordPress</a>是最好的，因为它是可定制的，针对移动用户进行了优化，并且易于与其他软件工具集成。</p>
+<p>WordPress有一个庞大的主题和插件数据库，使您的网站专业、用户友好和有吸引力。这就是为什么超过40%的互联网使用它！</p>
+<p>在本指南中，我们将解释如何在<a href="https://cloudinfrastructureservices.co.uk/how-to-setup-debian-server-on-azure-aws-gcp/">Debian 10</a>或11上<a href="https://cloudinfrastructureservices.co.uk/how-to-setup-wordpress-on-linux-with-apache-lets-encrypt-certs-on-azure-aws-gcp/">安装WordPress</a></p>
+<p><strong>另请阅读</strong></p>
+<p><a href="https://cloudinfrastructureservices.co.uk/how-to-setup-wordpress-on-linux-with-apache-lets-encrypt-certs-on-azure-aws-gcp/">如何使用Apache在Linux上设置WordPress + Lets在Azure/AWS/GCP上加密证书</a></p>
+<h2 id="第1步-安装lamp服务器">第1步-安装LAMP服务器</h2>
+<p>LAMP堆栈是一组开源软件（Linux、<a href="https://cloudinfrastructureservices.co.uk/apache-web-server-security-and-hardening-best-practices-checklist/">Apache</a>、<a href="https://cloudinfrastructureservices.co.uk/how-to-setup-mariadb-on-linux-in-azure-aws-gcp/">MariaDB</a>、PHP），用于在互联网上托管动态网站和应用程序。<a href="https://cloudinfrastructureservices.co.uk/how-to-setup-apache-web-server-mysql-server-on-linux-in-azure-aws-gcp/">LAMP服务器</a>是托管任何基于PHP的应用程序的主要要求。在本节中，我们将演示如何在<a href="https://www.debian.org/">Debian 10</a>或11上安装LAMP（Apache、MariaDB、PHP）服务器</p>
+<h3 id="安装apache-web-server">安装Apache Web Server</h3>
+<p>Apache Web服务器是世界上最受欢迎的<a href="https://cloudinfrastructureservices.co.uk/best-open-source-web-servers/">Web服务器</a>。这是托管网站的默认选择。运行以下命令在服务器上安装Apache Webserver软件包。</p>
+<pre><code class="language-javascript">apt-get install apache2  -y
+</code></pre>
+<p>完成安装后，启动Apache服务，并在系统重新启动后启用它：</p>
+<pre><code class="language-javascript">systemctl start apache2
+systemctl enable apache2
+</code></pre>
+<p><strong>另请阅读</strong></p>
+<p><a href="https://cloudinfrastructureservices.co.uk/apache-web-server-security-and-hardening-best-practices-checklist/">15 Apache Web Server安全性和强化最佳实践清单</a></p>
+<h3 id="安装php-8">安装PHP 8</h3>
+<p>在撰写本文时，<a href="https://www.php.net/releases/8.0/en.php">PHP</a>的最新版本是8.0。PHP 8具有显著的性能改进和新功能。因此，始终建议在服务器上安装PHP 8。</p>
+<p>默认情况下，PHP 8.0不包含在Debian 10/11默认存储库中。因此，您需要将PHP Sury存储库添加到服务器中。</p>
+<p>首先，使用以下命令安装所需的依赖项：</p>
+<pre><code class="language-javascript">apt-get install gnupg2 ca-certificates apt-transport-https software-properties-common -y
+</code></pre>
+<p>接下来，将PHP Sury存储库添加到APT，并使用以下命令添加GPG密钥：</p>
+<pre><code class="language-shell">echo &quot;deb https://packages.sury.org/php/ $(lsb_release -sc) main&quot; | tee /etc/apt/sources.list.d/php.list
+wget -qO - https://packages.sury.org/php/apt.gpg | apt-key add -
+</code></pre>
+<p>接下来，使用以下命令更新存储库并安装PHP 8.0，使用WordPress所需的所有必要的PHP扩展：</p>
+<pre><code class="language-javascript">apt-get update -y
+apt-get install php libapache2-mod-php php-pear php-cgi php-common php-mbstring php-zip php-net-socket php-gd php-xml-util php-gettext php-mysql php-bcmath unzip wget git -y
+</code></pre>
+<p>您现在可以使用以下命令检查PHP版本：</p>
+<pre><code class="language-javascript">php -v
+</code></pre>
+<p>输出样本：</p>
+<pre><code class="language-javascript">PHP 8.0.9 (cli) (built: Jul 30 2021 13:09:07) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v4.0.9, Copyright (c) Zend Technologies
+    with Zend OPcache v8.0.9, Copyright (c), by Zend Technologies
+</code></pre>
+<p><strong>另请阅读</strong></p>
+<p><a href="https://cloudinfrastructureservices.co.uk/mariadb-vs-mysql/">MariaDB与MySQL——有什么区别？（利弊）</a></p>
+<h3 id="安装mariadb数据库服务器">安装MariaDB数据库服务器</h3>
+<p>WordPress使用MySQL或<a href="https://mariadb.org/">MariaDB</a>作为数据库后端来存储和管理网站和用户信息。在这里，我们将安装和使用MariaDB作为数据库后端。</p>
+<p>默认情况下，MariaDB软件包包含在Debian 10/11默认存储库中。只需运行以下命令，即可安装它：</p>
+<pre><code class="language-javascript">apt-get install mariadb-server mariadb-client -y
+</code></pre>
+<p>安装MariaDB软件包后，启动MariaDB服务，并使其能够在系统重新启动时启动：</p>
+<pre><code class="language-javascript">systemctl start mariadb
+systemctl enable mariadb
+</code></pre>
+<p>默认情况下，MariaDB安装不安全。因此，建议使用mysql_secure_installation脚本保护MariaDB安装：</p>
+<pre><code class="language-javascript">mysql_secure_installation
+</code></pre>
+<p>系统将要求您设置MariaDB根密码，删除匿名用户，禁止远程根登录，并删除测试数据库，如下所示：</p>
+<pre><code class="language-javascript">Enter current password for root (enter for none):
+Change the root password? [Y/n] Y
+New password:
+Re-enter new password:
+Remove anonymous users? [Y/n] Y
+Disallow root login remotely? [Y/n] Y
+Remove test database and access to it? [Y/n] Y
+Reload privilege tables now? [Y/n] Y
+</code></pre>
+<p>此时，LAMP服务器已安装并准备部署WordPress网站。</p>
+<p><strong>另请阅读</strong></p>
+<p><a href="https://cloudinfrastructureservices.co.uk/wordpress-vs-drupal-vs-joomla/">WordPress vs Drupal vs Joomla – 哪个最好（2021年利弊）</a></p>
+<h2 id="第2步-创建wordpress数据库">第2步-创建WordPress数据库</h2>
+<p>现在，您需要在MariaDB上创建一个WordPress数据库和用户。首先，使用以下命令连接到MariaDB：</p>
+<pre><code class="language-javascript">mysql -u root -p
+</code></pre>
+<p>提供您的MariaDB根密码，然后使用以下命令创建数据库和用户：</p>
+<pre><code class="language-javascript">CREATE DATABASE wordpressdb;
+GRANT ALL PRIVILEGES ON wordpressdb.* to wordpressuser@localhost identified by 'strongpassword';
+</code></pre>
+<p>接下来，刷新权限以应用更改，然后使用以下命令退出MariaDB：</p>
+<pre><code class="language-javascript">FLUSH PRIVILEGES;
+QUIT;
+</code></pre>
+<h2 id="第3步-下载wordpress">第3步-下载WordPress</h2>
+<p>现在，您需要在服务器上下载并设置WordPress。建议从他们的官方网站下载最新版本的WordPress。</p>
+<p>首先，使用以下命令导航到Apache Web root目录：</p>
+<pre><code class="language-javascript">cd /var/www/html
+</code></pre>
+<p>接下来，使用 wget 命令下载最新版本的 WordPress：</p>
+<pre><code class="language-javascript">wget https://wordpress.org/latest.zip
+</code></pre>
+<p>接下来，使用解压命令解压下载的文件：</p>
+<pre><code class="language-bash">unzip latest.zip
+</code></pre>
+<p>接下来，将提取的目录重命名为首选域名。</p>
+<pre><code class="language-bash">mv wordpress yourdomain.com
+</code></pre>
+<p>接下来，导航到yourdomain.com目录并配置文件示例：</p>
+<pre><code class="language-javascript">cd yourdomain.com
+cp wp-config-sample.php wp-config.php
+</code></pre>
+<p>接下来，编辑WordPress配置文件并定义数据库设置：</p>
+<pre><code class="language-javascript">nano wp-config.php
+</code></pre>
+<p>更改与数据库设置匹配的以下行：</p>
+<pre><code class="language-javascript">/** The name of the database for WordPress */
+define( 'DB_NAME', 'wordpressdb' );
+
+/** MySQL database username */
+define( 'DB_USER', 'wordpressuser' );
+
+/** MySQL database password */
+define( 'DB_PASSWORD', 'strongpassword' );
+
+/** MySQL hostname */
+define( 'DB_HOST', 'localhost' );
+
+define('FS_METHOD', 'direct');
+</code></pre>
+<p>完成后保存文件。然后，将yourdomain.com目录的所有权更改为www-data：</p>
+<pre><code class="language-javascript">chown -R www-data:www-data /var/www/html/yourdomain.com
+</code></pre>
+<p><strong>另请阅读</strong></p>
+<p><a href="https://cloudinfrastructureservices.co.uk/wordpress-sso-single-sign-on/">WordPress SSO – Azure AD/Active Directory的单点登录插件</a></p>
+<h2 id="第4步-为wordpress创建apache虚拟主机">第4步-为WordPress创建Apache虚拟主机</h2>
+<p>接下来，您需要为WordPress创建一个Apache虚拟主机配置文件。您可以使用以下命令创建它：</p>
+<pre><code class="language-javascript">nano /etc/apache2/sites-available/yourdomain.conf
+</code></pre>
+<p>添加以下行：</p>
+<pre><code class="language-php">&lt;VirtualHost *:80&gt;
+ServerAdmin user@yourdomain.com
+        ServerName yourdomain.com
+        DocumentRoot /var/www/html/yourdomain.com
+
+        &lt;Directory &quot;https://net.cloudinfrastructureservices.co.uk/var/www/html/yourdomain.com&quot;&gt;
+             AllowOverride All
+        &lt;/Directory&gt;
+
+        ErrorLog ${APACHE_LOG_DIR}/yourdomain.error.log
+        CustomLog ${APACHE_LOG_DIR}/yourdomain.access.log combined
+&lt;/VirtualHost&gt;
+</code></pre>
+<p>保存并关闭文件，然后验证配置文件是否有任何语法错误：</p>
+<pre><code class="language-javascript">apache2ctl configtest
+</code></pre>
+<p>输出样本：</p>
+<pre><code class="language-javascript">Syntax OK
+</code></pre>
+<p>接下来，激活Apache虚拟主机，并使用以下命令启用重写模块：</p>
+<pre><code class="language-javascript">a2ensite yourdomain
+a2enmod rewrite
+</code></pre>
+<p>最后，重新启动Apache服务以应用配置更改。</p>
+<pre><code class="language-javascript">systemctl restart apache2
+</code></pre>
+<p><strong>另请阅读</strong></p>
+<p><a href="https://cloudinfrastructureservices.co.uk/how-to-setup-wordpress-on-windows-in-aws/">如何在AWS的Windows Server上设置WordPress（2单击AWS WordPress托管）</a></p>
+<h2 id="第5步-为wordpress启用https">第5步-为WordPress启用HTTPS</h2>
+<p>始终建议在WordPress网站上启用HTTPS来加密HTTP流量。您需要安装和配置<a href="https://letsencrypt.org/">Let's Encrypt</a>免费SSL才能启用HTTPS。</p>
+<p>首先，使用以下命令安装Let's Encrypt客户端包：</p>
+<pre><code class="language-javascript">apt-get install certbot python3-certbot-apache -y
+</code></pre>
+<p>现在，运行以下命令在您的WordPress网站上下载并安装Let's Encrypt证书。</p>
+<pre><code class="language-javascript">certbot --apache --agree-tos --redirect --hsts --uir --staple-ocsp --email user@yourdomain.com -d yourdomain.com,www.yourdomain.com
+</code></pre>
+<p>此命令将下载Let's Encrypt SSL，并将您的Apache配置为使用这些SSL证书。</p>
+<p>下文简要解释了每个选项：</p>
+<ul>
+<li><strong>–apache：</strong> 让我们加密Apache插件。</li>
+<li><strong>–同意：</strong> 同意条款和服务。</li>
+<li><strong>–重定向：</strong> 使用301重定向将网站重定向到HTTPS。</li>
+<li><strong>–hsts：</strong> 为每个HTTP响应启用严格传输安全标头。</li>
+<li><strong>–uir：</strong> 将Content-Security-Policy标头添加到每个HTTP响应中。</li>
+<li><strong>–订书钉-ocsp：</strong> 启用OCSP订书。</li>
+<li><strong>–电子邮件：</strong> 用于注册和证书通知的有效电子邮件地址。</li>
+<li><strong>-d：</strong> 定义域名。</li>
+</ul>
+<p>接下来，您需要设置一个cron作业来自动续订Let's Encrypt证书。为此，请使用以下命令编辑cron作业：</p>
+<pre><code class="language-javascript">crontab -e
+</code></pre>
+<p>添加以下行：</p>
+<pre><code class="language-javascript">@daily certbot renew --quiet &amp;amp;&amp;amp; systemctl reload apache2
+</code></pre>
+<p>完成后保存并关闭文件。上述cron作业将每天运行，如果SSL证书即将到期，则会自动续订。</p>
+<p><strong>另请阅读</strong></p>
+<p><a href="https://cloudinfrastructureservices.co.uk/best-free-security-plugins-for-wordpress/">WordPress的20大最佳免费安全插件</a></p>
+<h2 id="第6步-访问wordpress网站">第6步-访问WordPress网站</h2>
+<p>现在，打开您的网页浏览器，并使用URL <strong>https://yourdomain.com</strong>访问WordPress安装向导。您将被重定向到语言选择屏幕：</p>
+<figure data-type="image" tabindex="1"><img src="https://net.cloudinfrastructureservices.co.uk/wp-content/uploads/2021/08/wordpress-select-language.png" alt="在Debian 10上安装WordPress" loading="lazy"></figure>
+<p>选择您的语言，然后单击“<strong>继续</strong>”按钮。您应该会看到WordPress网站配置屏幕：</p>
+<figure data-type="image" tabindex="2"><img src="https://net.cloudinfrastructureservices.co.uk/wp-content/uploads/2021/08/wordpress-site-configuration.png" alt="在Debian 10上安装WordPress" loading="lazy"></figure>
+<p>提供您的网站信息，然后单击“<strong>安装WordPress</strong>”按钮。安装完成后。您应该会看到以下屏幕：</p>
+<figure data-type="image" tabindex="3"><img src="https://net.cloudinfrastructureservices.co.uk/wp-content/uploads/2021/08/wordpress-installation-success-1.png" alt="安装WordPress步骤" loading="lazy"></figure>
+<p>点按“<strong>登录</strong>”按钮。您应该会看到WordPress登录屏幕：</p>
+<figure data-type="image" tabindex="4"><img src="https://net.cloudinfrastructureservices.co.uk/wp-content/uploads/2021/08/wordpress-login-screen.png" alt="WordPress登录屏幕" loading="lazy"></figure>
+<p>提供您的管理员用户名、密码，然后单击<strong>登录</strong>按钮。您将被重定向到WordPress仪表板：</p>
+<figure data-type="image" tabindex="5"><img src="https://net.cloudinfrastructureservices.co.uk/wp-content/uploads/2021/08/wordpress-dashboard-1.png" alt="WordPress仪表板" loading="lazy"></figure>
+<p><strong>另请阅读</strong></p>
+<p><a href="https://cloudinfrastructureservices.co.uk/wordpress-sso-plugins/">前5名WordPress SSO插件（活动目录/Azure AD）</a></p>
+<h2 id="结论">结论</h2>
+<p>在上述指南中，我们演示了如何在Debian 10/11上安装WordPress。我们还解释了如何使用Let's Encrypt免费SSL在WordPress网站上启用HTTPS。您现在可以在WordPress平台上开始创建第一个博客。</p>
+
+       </div>
+       <div class="post-footer">
+        <div class="meta">
+         <div class="info">
+          <i class="fa fa-sun-o"></i>
+          <span class="date">2022-03-09</span>
+          <i class="fa fa-tag"></i>
+          
+          <a class="tag" href="https://peachfart.github.io/site/XEUVrLJCF/" title="Course of study">Course of study </a>
+          
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="share">
+       <div class="evernote">
+        <a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a>
+       </div>
+       <div class="weibo">
+        <a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a>
+       </div>
+       <div class="twitter">
+        <a class="fa fa-twitter" href="http://twitter.com/home?status=,https://peachfart.github.io/site/KsweFn2Ck/,;"></a>
+       </div>
+      </div>
+      <div class="pagination">
+       <ul class="clearfix">
+
+        <li class="pre pagbuttons"><a class="btn" role="navigation" href="https://peachfart.github.io/site/iY_yXvE3v/" title="全国计算机等级考试--计算机三级网络技术知识点">上一篇</a></li>
+         
+        
+       </ul>
+      </div>
+        
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'MisterXu',
+  apikey: 'A2o0xm8E9euD1vjr6p8HeZZPP9MK4kwu8fxzYy9EeLVsyWPoIkhloSY90Enaq1yV',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+     </div>
+    </div>
+   </div>
+  </div>
+  <script src="https://peachfart.github.io/site//media/scripts/jquery.js"></script>
+  <script src="https://peachfart.github.io/site//media/scripts/jquery-migrate-1.2.1.min.js"></script>
+  <script src="https://peachfart.github.io/site//media/scripts/jquery.appear.js"></script>
+
+
+ </body>
+</html>
